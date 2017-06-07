@@ -1,0 +1,35 @@
+* COMMENT -*- Mode: org; -*-
+
+#+TITLE: spirw.sh
+
+* About
+
+Full duplex Read and Write command for Raspberry Pi SPI Interface implemented on shell script.
+
+* Usage
+
+#+BEGIN_VERSE
+{
+        echo 10100000
+        yes  00000000   |
+        head -n 10
+}                       |
+spirw			|
+bin2hex
+#+END_VERSE
+
+* File tree
+
++ spirw.sh
+  + .git            : git system directory
+  - .gitignore      : git ignoring file definition
+  - README.org      : This README file
+  - LICENSE         : About License
+  - rc              : Set Environment paramters while development
+
+  + bin             : Scripts directory
+    - spirw         : SPI Read and Write Command
+
+  + lib             : Library directory
+
+* References

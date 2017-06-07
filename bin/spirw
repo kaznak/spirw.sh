@@ -1,0 +1,38 @@
+#!/bin/bash
+
+####################################
+# arguments & configuration parameters
+
+infile=${1:-"-"}
+
+CE0=8
+MISO=9
+MOSI=10
+SCLK=11
+
+####################################
+# pin setting
+
+gpio -g mode $CE0 out
+gpio -g mode $MISO in
+gpio -g mode $MOSI out
+gpio -g mode $SCLK out
+
+####################################
+# do read write
+
+# reset bus
+gpio -g write $CE0 1
+gpio -g write $CE0 0
+
+grep -Eo '[01]' $infile	|
+    fold -w1		|
+while read b ; do
+        gpio -g write $SCLK 0
+        gpio -g write $MOSI $b
+        gpio -g write $SCLK 1
+        gpio -g read  $MISO
+done
+
+####################################
+exit 0
