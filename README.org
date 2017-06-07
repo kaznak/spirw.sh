@@ -4,11 +4,11 @@
 
 * About
 
-Full duplex Read and Write command for Raspberry Pi SPI Interface implemented on shell script.
+Full duplex Read and Write command for Raspberry Pi SPI Interface implemented in shell script.
 
 * Usage
 
-#+BEGIN_VERSE
+#+BEGIN_SRC 
 {
         echo 10100000
         yes  00000000   |
@@ -16,7 +16,10 @@ Full duplex Read and Write command for Raspberry Pi SPI Interface implemented on
 }                       |
 spirw			|
 bin2hex
-#+END_VERSE
+#+END_SRC
+
+The easy way to debug SPI interface is 
+shorting GPIO 10(MOSI) and GPIO 9(MISO) by jumper pin.
 
 * File tree
 
