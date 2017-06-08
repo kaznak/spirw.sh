@@ -11,7 +11,7 @@ infile=${1:-"-"}
 {
     echo "ibase=2;obase=10000;"
 
-    cat $infile		|
+    cat "$infile"	|
 	tr -Cd '01'	|
 	fold -w 4	|
 	awk '{ printf("%04d\n", $0) }'
