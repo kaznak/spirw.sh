@@ -21,6 +21,9 @@ bin2hex
 The easy way to debug SPI interface is 
 shorting GPIO 10(MOSI) and GPIO 9(MISO) by jumper pin.
 
+Current version supports only SPI mode 0, CPOL=0 and CPHA=0,
+and MSB(Most Significant Bit) first sending method.
+
 * File tree
 
 + spirw.sh
