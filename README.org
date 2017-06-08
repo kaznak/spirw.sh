@@ -39,3 +39,6 @@ and MSB(Most Significant Bit) first sending method.
   + lib             : Library directory
 
 * References
+
+https://synapse.kyoto/glossary/glossary.php?word=SPI
+
