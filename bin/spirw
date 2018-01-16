@@ -10,29 +10,50 @@ MISO=9
 MOSI=10
 SCLK=11
 
+CE0_D=/sys/class/gpio/gpio$CE0
+MISO_D=/sys/class/gpio/gpio$MISO
+MOSI_D=/sys/class/gpio/gpio$MOSI
+SCLK_D=/sys/class/gpio/gpio$SCLK
+
 ####################################
 # pin setting
 
-gpio -g mode $CE0 out
-gpio -g mode $MISO in
-gpio -g mode $MOSI out
-gpio -g mode $SCLK out
+[ -d "$CE0_D" ]  || echo $CE0  > /sys/class/gpio/export
+[ -d "$MISO_D" ] || echo $MISO > /sys/class/gpio/export
+[ -d "$MOSI_D" ] || echo $MOSI > /sys/class/gpio/export
+[ -d "$SCLK_D" ] || echo $SCLK > /sys/class/gpio/export
+
+echo "out" > $CE0_D/direction
+echo "in"  > $MISO_D/direction
+echo "out" > $MOSI_D/direction
+echo "out" > $SCLK_D/direction
 
 ####################################
 # do read write
 
-gpio -g write $CE0 1
-gpio -g write $CE0 0
+# reset SPI
+echo 1 > $CE0_D/value
+echo 0 > $CE0_D/value
 
 grep -Eo '[01]' "$infile"	|
-while read b ; do
-        gpio -g write $SCLK 0
-        gpio -g write $MOSI "$b"
-        gpio -g write $SCLK 1
-        gpio -g read  $MISO
-done
+awk '
+function outb(val, file){
+    print val > file
+    fflush(file)
+}
+function inb(file){
+    getline  < file
+    print $1
+}
+{
+    outb(0,  "'$SCLK_D/value'")
+    outb($1, "'$MOSI_D/value'")
+    outb(1,  "'$SCLK_D/value'")
+    inb("'$MISO_D/value'")
+}'
 
-gpio -g write $CE0 1
+# reset SPI
+echo 1 > $CE0_D/value
 
 ####################################
 exit 0
