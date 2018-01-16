@@ -1,0 +1,9 @@
+
+{
+        echo 10100000
+        yes  00000000   |
+        head -n 10
+}                       |
+spirw                   |
+{ tr -d '\n' | fold -w 8 ; echo ; }
+
